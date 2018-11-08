@@ -23,6 +23,13 @@
 
 namespace Soderlind\NinjaForms\Action\DSSEvent;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+if ( ! class_exists( '\DSS\WP_Events\Event' ) ) {
+	return;
+}
+
 add_filter(
 	'ninja_forms_register_actions',
 	function( $actions ) {
@@ -51,6 +58,7 @@ add_filter(
 			 * Constructor
 			 */
 			public function __construct() {
+
 				parent::__construct();
 
 				$this->_nicename = __( 'DSS Event', 'ninja-forms' );
@@ -110,14 +118,16 @@ add_filter(
 				);
 				$options = [];
 				$value   = '';
-				foreach ( $events as  $event ) {
-					if ( '' == $value ) {
-						$value = $event->ID;
+				if ( $events ) {
+					foreach ( $events as  $event ) {
+						if ( '' == $value ) {
+							$value = $event->ID;
+						}
+						$options[] = [
+							'label' => $event->post_title,
+							'value' => $event->ID,
+						];
 					}
-					$options[] = [
-						'label' => $event->post_title,
-						'value' => $event->ID,
-					];
 				}
 
 				return [
