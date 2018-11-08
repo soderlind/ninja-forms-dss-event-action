@@ -71,14 +71,27 @@ add_filter(
 
 				if ( isset( $action_settings['dss_event_id'] ) ) {
 					$event = \DSS\WP_Events\Event::get_event( $action_settings['dss_event_id'] );
-					$event->add_guest(
-						$action_settings['dss_event_firstname'],
-						$action_settings['dss_event_lastname'],
-						$action_settings['dss_event_email'],
-						$action_settings['dss_event_phone'],
-						$action_settings['dss_event_title'],
-						$action_settings['dss_event_company']
-					);
+					if ( $event instanceof \WP_Error ) {
+						$errors = $event->get_error_message();
+					}
+
+					if ( ! isset( $errors ) && true !== $event->is_signup_allowed() ) {
+						$errors = esc_html__( 'Sign up is not possible at the moment. The deadline date has already passed.', 'dss-wp-events' );
+					}
+					if ( ! isset( $errors ) ) {
+						$event->add_guest(
+							$action_settings['dss_event_firstname'],
+							$action_settings['dss_event_lastname'],
+							$action_settings['dss_event_email'],
+							$action_settings['dss_event_phone'],
+							$action_settings['dss_event_title'],
+							$action_settings['dss_event_company']
+						);
+					}
+				}
+
+				if ( isset( $errors ) ) {
+					$data['errors']['form']['dssevent-error'] = $errors;
 				}
 
 				return $data;
