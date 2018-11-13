@@ -75,6 +75,14 @@ add_filter(
 			public function save( $action_settings ) {
 			}
 
+			/**
+			 * Overloaded method, reads the action settings and processes them.
+			 *
+			 * @param [type] $action_settings
+			 * @param [type] $form_id
+			 * @param [type] $data
+			 * @return void
+			 */
 			public function process( $action_settings, $form_id, $data ) {
 
 				if ( isset( $action_settings['dss_event_id'] ) ) {
@@ -99,7 +107,7 @@ add_filter(
 				}
 
 				if ( isset( $errors ) ) {
-					$data['errors']['form']['dssevent-error'] = $errors;
+					$data['errors']['form']['dssevent-error'] = $errors; //'dssevent_error' cound be whatever you want
 				}
 
 				return $data;
@@ -109,6 +117,11 @@ add_filter(
 				return include plugin_dir_path( __FILE__ ) . 'config/' . $file_name . '.php';
 			}
 
+			/**
+			 * Create event list
+			 *
+			 * @return Array   Event list setting
+			 */
 			protected function get_events() {
 				$events  = get_posts(
 					[
