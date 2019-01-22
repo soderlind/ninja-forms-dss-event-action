@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Ninja Form Action for DSS Events
+ * Ninja Forms Action for DSS Events
  *
- * @package     Ninja Form Action for DSS Events
+ * @package     Ninja Forms Action for DSS Events
  * @author      Per Soderlind
  * @copyright   2018 Per Soderlind
  * @license     GPL-2.0+
@@ -13,7 +13,7 @@
  * Plugin URI: https://github.com/soderlind/ninja-forms-dss-event-action
  * GitHub Plugin URI: https://github.com/soderlind/ninja-forms-dss-event-action
  * Description: description
- * Version:     3.0.1
+ * Version:     3.0.2
  * Author:      Per Soderlind
  * Author URI:  https://soderlind.no
  * Text Domain: ninja-forms-dss-event-action
@@ -95,19 +95,21 @@ add_filter(
 						$errors = esc_html__( 'Sign up is not possible at the moment. The deadline date has already passed.', 'dss-wp-events' );
 					}
 					if ( ! isset( $errors ) ) {
+						$send_confirmation = ( '1' == $action_settings['dss_event_send_confirmation'] ) ? true : false;
 						$event->add_guest(
 							$action_settings['dss_event_firstname'],
 							$action_settings['dss_event_lastname'],
 							$action_settings['dss_event_email'],
 							$action_settings['dss_event_phone'],
 							$action_settings['dss_event_title'],
-							$action_settings['dss_event_company']
+							$action_settings['dss_event_company'],
+							$send_confirmation
 						);
 					}
 				}
 
 				if ( isset( $errors ) ) {
-					$data['errors']['form']['dssevent-error'] = $errors; //'dssevent_error' cound be whatever you want
+					$data['errors']['form']['dssevent-error'] = $errors; //'dssevent_error' could be whatever you want
 				}
 
 				return $data;

@@ -59,4 +59,14 @@ return apply_filters( 'ninja_forms_action_dssevent_settings', array(
 		'width'          => 'one-half',
 		'use_merge_tags' => true,
 	),
+	'dss_event_send_confirmation' => array(
+        'name'           => 'dss_event_send_confirmation',
+        'type'           => 'toggle',
+        'label'          => __( '(Also) send confirmation email using DSS Event', 'ninja-forms' ),
+        'width'          => 'full',
+        'group'          => 'primary',
+		'value'          => 0,
+		'help'           => __( "Don't do this, it's better to send confirmation emails using Ninja Forms", 'ninja-forms' ),
+		'use_merge_tags' => true,
+    ),
 ) );
