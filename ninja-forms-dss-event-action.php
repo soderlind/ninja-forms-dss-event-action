@@ -13,7 +13,7 @@
  * Plugin URI: https://github.com/soderlind/ninja-forms-dss-event-action
  * GitHub Plugin URI: https://github.com/soderlind/ninja-forms-dss-event-action
  * Description: description
- * Version:     3.0.2
+ * Version:     3.0.3
  * Author:      Per Soderlind
  * Author URI:  https://soderlind.no
  * Text Domain: ninja-forms-dss-event-action
