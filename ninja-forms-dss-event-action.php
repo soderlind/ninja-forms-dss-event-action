@@ -33,7 +33,7 @@ if ( ! class_exists( '\DSS\WP_Events\Event' ) ) {
 add_filter(
 	'ninja_forms_register_actions',
 	function( $actions ) {
-		$actions['dssevent'] = new class extends \NF_Abstracts_Action { // anonymous class, PHP 7.x requiered
+		$actions['dssevent'] = new class() extends \NF_Abstracts_Action { // anonymous class, PHP 7.x requiered
 			/**
 			 * @var string
 			 */
@@ -42,7 +42,7 @@ add_filter(
 			/**
 			 * @var array
 			 */
-			protected $_tags = array();
+			protected $_tags = [];
 
 			/**
 			 * @var string
@@ -91,9 +91,14 @@ add_filter(
 						$errors = $event->get_error_message();
 					}
 
-					if ( ! isset( $errors ) && true !== $event->is_signup_allowed() ) {
+					if ( ! isset( $errors ) && true === $event->is_deadline_passed() ) {
 						$errors = esc_html__( 'Sign up is not possible at the moment. The deadline date has already passed.', 'dss-wp-events' );
 					}
+
+					if ( ! isset( $errors ) && true === $event->is_guest_limit_reached() ) {
+						$errors = esc_html__( 'Sign up is not possible at the moment. The guests limit is reached.', 'dss-wp-events' );
+					}
+
 					if ( ! isset( $errors ) ) {
 						$send_confirmation = ( '1' == $action_settings['dss_event_send_confirmation'] ) ? true : false;
 						$event->add_guest(
@@ -109,7 +114,7 @@ add_filter(
 				}
 
 				if ( isset( $errors ) ) {
-					$data['errors']['form']['dssevent-error'] = $errors; //'dssevent_error' could be whatever you want
+					$data['errors']['form']['dssevent-error'] = $errors; // 'dssevent_error' could be whatever you want
 				}
 
 				return $data;
