@@ -1,0 +1,8 @@
+{
+    "name": "soderlind/ninja-forms-dss-event-action",
+    "description": "Ninja Form Action for DSS Events",
+    "type": "wordpress-plugin",
+    "homepage": "https://github.com/soderlind/ninja-forms-dss-event-action",
+    "license": "GPL-2.0-or-later",
+    "require": {}
+}
